@@ -92,17 +92,10 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-# kellen's aliases
-
-alias ports='udevadm info --export-db |grep -i "^n: ttyu"'
-alias pi0="ssh -l pi0 192.168.4.109"
-alias pi1="ssh -l pi1 192.168.4.33"
-alias git="git.exe"
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-alias jupyter-notebook="~/.local/bin/jupyter-notebook --no-browser"
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -122,28 +115,11 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+#### End of Default rc
 
-
-PATH_SCRIPT_LUA=~/Git/script/lua
-PATH_SCRIPT_PY=~/Git/script/py
-PATH_SCRIPT_SH=~/Git/script/sh
-PATH_SCRIPT_ALL=$PATH_SCRIPT_LUA:$PATH_SCRIPT_PY:$PATH_SCRIPT_SH 
-
-export WSL_REPO=~/repo
-export XT_GO_STYLE="GO_STYLE_BUILDSYNC"
-export XT_GO_SYNCDIR=~/userprofile/repo/rsync
-export XT_GO_SYNCDOSDIR="C:/Users/kovervig/xirgo/repo/rsync"
 export KOMODO_DIR="LLVM"
 export KOMODO_DISK="c"
 export KOMODO_BRANCH="_Git/reanimate"
-
-export PATH=$PATH:$PATH_SCRIPT_ALL
-export PATH=$PATH:~/Downloads/ripgrep-11.0.2-x86_64-unknown-linux-musl
-
-export EDITOR=vim
-export TERM=xterm-24bit
-
-export XT_GO_STYLE="GO_STYLE_BUILDSYNC"
 
 #### Prompt config ####
 #    Gruvbox Color Codes
@@ -184,7 +160,7 @@ function GitPath() {
 }
 
 #    Build Prompt
-export PS1="${UserColor}\u@\h ${PathColor}\$(GitRepo)\$(GitPath)${GitColor}\$(GitBranch)${NormalColor}\n\$ "
+export PS1="${UserColor}\u@work ${PathColor}\$(GitRepo)\$(GitPath)${GitColor}\$(GitBranch)${NormalColor}\n\$ "
 
 function rean() {
     cd /mnt/c/_Git/reanimate
@@ -203,4 +179,4 @@ function komodo_server() {
 }
 
 # change staring directory
-cd /mnt/c/
+cd /mnt/c/_Git
