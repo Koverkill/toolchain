@@ -116,6 +116,7 @@ if ! shopt -oq posix; then
   fi
 fi
 #### End of Default rc
+export EDITOR=vim
 
 export KOMODO_DIR="LLVM"
 export KOMODO_DISK="c"
@@ -164,6 +165,14 @@ export PS1="${UserColor}\u@work ${PathColor}\$(GitRepo)\$(GitPath)${GitColor}\$(
 
 function rean() {
     cd /mnt/c/_Git/reanimate
+}
+
+function bashrc() {
+    vim ~/.bashrc
+}
+
+function vimrc() {
+    vim ~/.vimrc
 }
 
 function komodo() {
