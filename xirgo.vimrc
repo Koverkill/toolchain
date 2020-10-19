@@ -361,7 +361,8 @@ let g:ctrlp_by_filename = 1
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 if executable('fd')
     " Use fd for ctrlp.
-    let g:ctrlp_user_command = 'fd -c never "" "%s"'
+    "let g:ctrlp_user_command = 'fd -c never "" "%s"'
+    let g:ctrlp_user_command = 'fd -c never --no-ignore-vcs -t file -E tools/ "" "%s"'
     let g:ctrlp_use_caching = 1
 endif
 let g:ctrlp_custom_ignore = {
