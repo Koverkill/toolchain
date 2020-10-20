@@ -1,0 +1,4 @@
+For the Linux build stuff, don't use 7Zip
+- cd snapdragon
+- tar -xvf snapdragon.tar
+- tar -xzvf snapdragon.tar.gz
