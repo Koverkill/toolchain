@@ -92,6 +92,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+# lazygit aliases
+alias lg='lazygit'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -125,7 +128,7 @@ export KOMODO_BRANCH="_Git/reanimate"
 export KOMODO_SOURCE="/mnt/c/_Git/reanimate"
 export KOMODO_TOOLCHAIN="/mnt/c/_Git/LLVM/4.0.3/LNX"
 
-KOMODO_DEV_PORT="/dev/ttyS6"
+KOMODO_DEV_PORT="/dev/ttyS21"
 
 export MKBINS="powershell.exe -Command tools/mkbins.exe"
 
@@ -207,13 +210,70 @@ function komodo() {
     cd /mnt/c/_Git/reanimate
     rm -rf build/komodo
     make -f ewp/komodo.make -j $1
-    make -f ewp/komodo.make -j $1
+}
+
+function viola() {
+    dir=`pwd`
+    cd /mnt/c/_Git/reanimate
+    cmd.exe /c "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.2\\common\\bin\\IarBuild.exe" ewp/viola.ewp -make engineering -parallel 8
+    cd /mnt/c/_Git/reanimate/tools/mkbins
+    ./mkbins_impossiblewhopper ../../build/viola/engineering/exe/viola 100
+    cd $dir
+}
+
+function castanet() {
+    dir=`pwd`
+    cd /mnt/c/_Git/reanimate
+    cmd.exe /c "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.2\\common\\bin\\IarBuild.exe" ewp/castanet.ewp -make engineering -parallel 8
+    cd $dir
+}
+
+function castanet_boot() {
+    dir=`pwd`
+    cd /mnt/c/_Git/reanimate
+    cmd.exe /c "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.2\\common\\bin\\IarBuild.exe" ewp/castanet_boot.ewp -make engineering -parallel 8
+    cd $dir
+}
+
+function harpsichord() {
+    dir=`pwd`
+    cd /mnt/c/_Git/reanimate
+    cmd.exe /c "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.2\\common\\bin\\IarBuild.exe" ewp/harpsichord.ewp -make engineering -parallel 8
+    cd $dir
+}
+
+function harpsichord_boot() {
+    dir=`pwd`
+    cd /mnt/c/_Git/reanimate
+    cmd.exe /c "C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.2\\common\\bin\\IarBuild.exe" ewp/harpsichord_boot.ewp -make engineering -parallel 8
+    cd $dir
 }
 
 function komodo_server() {
     dir=`pwd`
     cd /mnt/c/_Git/utils/Zubie/Py3
     python3 Py3_MQTT_Client.py -f kellen_py3config.txt -d debug
+    cd $dir
+}
+
+function castanet_server() {
+    dir=`pwd`
+    cd /mnt/c/_Git/utils/Zubie/Py3
+    python3 Py3_MQTT_Client.py -f kellen_py3config_castanet.txt -d debug
+    cd $dir
+}
+
+function harpsichord_server() {
+    dir=`pwd`
+    cd /mnt/c/_Git/utils/Zubie/Py3
+    python3 Py3_MQTT_Client.py -f kellen_py3config_harpsichord.txt -d debug
+    cd $dir
+}
+
+function castanet_vince() {
+    dir=`pwd`
+    cd /mnt/c/_Git/utils/Zubie/Py3
+    python3 Py3_MQTT_Client.py -f vince_py3config.txt -d debug
     cd $dir
 }
 
@@ -228,18 +288,33 @@ function komodo_tio() {
     tio ${KOMODO_DEV_PORT} 
 }
 
-# change staring directory
-cd /mnt/c/_Git
+function yourway() {
+    dir=$(pwd)
+    cd /mnt/c/_Git/reanimate/build/tools/
+    mv whopper whopper.exe
+    cd /mnt/c/_Git/reanimate/tools/
+    bash yourway.sh ${1} ${2} ${3}
+    cd /mnt/c/_Git/reanimate/build/tools/
+    mv whopper.exe whopper
+    cd ${dir}
+}
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 if type rg &> /dev/null; then
-    export FZF_DEFAULT_COMMAND='rg --files'
+    export FZF_DEFAULT_COMMAND='rg --files --glob "!.git/*"'
     export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
 
 export LD_LIBRARY_PATH="/usr/local/lib"
 
-
 # AWS stuff
 source ~/.bash_aws
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH=$PATH:/mnt/c/_Git/ccls/Release/
+export PATH=$PATH:/mnt/c/win32yank-x64/
+cd /mnt/c/_Git

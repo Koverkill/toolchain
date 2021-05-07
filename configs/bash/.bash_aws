@@ -1,0 +1,149 @@
+#!/bin/bash
+
+# Functions Available:
+# presign
+# thing
+# ota
+# job
+# status
+
+# Examples:
+## Presign an existing S3 resource and put the link in the clipboard.
+## presign best_firmware.x00
+
+## Change thing name (if you don't want to edit the default value in this file)
+## thing XT3562-999
+
+## Queue up ota job with firmware in your current directory or S3 bucket.
+## ota best_firmware.x00 1
+
+## Queue up regular job. (!cp:9,3)
+## job cp 9 3
+
+## Get status of previously executed job.
+## status
+
+# Aliases
+alias presign='aws_presign'
+alias thing='aws_thing'
+alias ota='aws_ota'
+alias job='aws_job'
+alias status='aws_status'
+
+# Variables
+export AWS_PYTHON3="python3"                                             # python3 executable
+export AWS_S3_BUCKET="ltem"                                              # S3 bucket name
+export AWS_S3_PRESIGN="/mnt/c/_Git/utils/aws_presign.py"                 # presign python script
+export AWS_ARN="arn:aws:iot:us-west-2:011929418200:thing/"               # Amazon resource name (excluding thing name)
+export AWS_THING="XT3562-55"                                             # Thing name (default)
+export AWS_JOB_ID=-1                                                     # Most recent job id generated.
+
+if [ $(which aws) != "/usr/bin/aws" ]; then
+    echo "Please install and configure AWS CLI before trying to use AWS functions."
+fi
+
+# Presign specified firmware image and copy the link to the clipboard.
+#
+# @param[in] Resource  Artifact located in configured S3 bucket.
+function aws_presign() {
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: (Generate presigned link based on S3 resource, copy link to clipboard.)"
+        echo
+        echo "          presign <Resource>"
+        echo
+        echo "       <Resource>: Artifact located in configured S3 bucket."
+        return 1
+    fi
+
+    ${AWS_PYTHON3} ${AWS_S3_PRESIGN} ${AWS_S3_BUCKET} ${1} us-east-1 443 | clip.exe
+}
+
+# Changes default Thing Name used by 'ota_helper', 'job_helper', and 'job_status'.
+function aws_thing() {
+    export AWS_THING=${1}
+}
+
+# Loads firmware on S3 bucket. Generates presigned link. Creates OTA job using presigned link.
+# Call this function in the directory where your firmware image is.
+#
+# @param[in] Firmware     Firmware Image File Name
+# @param[in] Update Type  Type of update to be performed. (Boot, Main, Whopper, Cell, ect)
+function aws_ota() {
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: (Load Firmware to S3, generate presigned link, create job to OTA firmware to device.)"
+        echo
+        echo "              ota <Firmware> <Update_Type>"
+        echo
+        echo "       <Firmware>: Firmware Image File Name (Must be in current directory.)"
+        echo "    <Update Type>: Type of update to be performed. (Boot, Main, Whopper, Cell, ect)"
+        return 1
+    fi
+
+    # Load firmare onto S3 bucket. (if it exists)
+    if [ -f ${1} ]; then
+        aws s3 cp ${1} s3://${AWS_S3_BUCKET}
+    else
+        echo "Firmware not found. Is it already hosted on S3?"
+
+        read -p '(y/n): ' response
+
+        if [ "${response}" != "y" ]; then
+            echo "Please navigate to the directory where the firmware image is located, or host it on S3."
+            return 1
+        fi
+    fi
+
+    # Generate presigned link for firmware.
+    URL=$(${AWS_PYTHON3} ${AWS_S3_PRESIGN} ${AWS_S3_BUCKET} ${1} us-east-1 443)
+
+    # Create job using presigned link.
+    job uf ${2} ${URL}
+}
+
+# Creates Job using arguments to build the job document.
+#
+# @param[in] Command       Command string without '!'. Ex: cp uf cs ip is
+# @param[in] [Index]       First index supplied to commnand.
+# @param[in] [Argument(s)] Rest of the string supplied to the command.
+function aws_job() {
+    if [ "$#" -lt 1 ]; then
+        echo "Usage: (Creates Job using parameters passed in.)"
+        echo
+        echo "              job <Command> [<Index>] [<Argument(s)>]"
+        echo
+        echo "       <Command> : Command string without '!'. Ex: cp uf cs ip is"
+        echo "       [<Index>] : First index supplied to commnand."
+        echo " [<Argument(s)>] : Rest of the string supplied to the command."
+        return 1
+    fi
+
+    ID=${RANDOM}${RANDOM}
+    aws iot create-job --job-id ${ID} --targets ${AWS_ARN}${AWS_THING} --document '{"!'${1}'":["'${2}'","'${3}'"]}'
+
+    # Export job ID for status checking.
+    export AWS_JOB_ID=${ID}
+}
+
+# Describes job execution using the stored Thing and most recently executed Job initiated by 'job_helper' or 'ota_helper'.
+function aws_status() {
+    if [ ${AWS_JOB_ID} -eq -1 ]; then
+        echo
+        echo "    No job id saved. Please execute a job using 'job_helper' or 'ota_helper'."
+        echo "    Alternatively, you can export your job id to JOB_ID"
+        echo
+        return 1
+    fi
+
+    aws iot describe-job-execution --thing-name ${AWS_THING} --job-id ${AWS_JOB_ID}
+}
+
+# Put someting in bucket :)
+function aws_bucket() {
+    # if file exists and is encrypted bin
+    echo ${1}
+    if [ -f ${1} ] && [ ${1: -4} == ".x00" ]; then
+        echo "~ENCRYPTION DETECTED~"
+        aws s3 cp ${1} s3://${AWS_S3_BUCKET} --acl public-read 
+        echo "~YOUR SHIZ IS IN THE BUCKET~"
+    fi 
+}
