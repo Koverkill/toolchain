@@ -1,22 +1,17 @@
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
 
-    // Global Application Settings 
+    // Global Application Settings
     "defaultProfile": "Ubuntu-18.04",
     "disabledProfileSources": ["Windows.Terminal.Azure"],
     "theme": "dark",
     "useTabSwitcher": true,
-    "tabWidthMode": "compact",
     "confirmCloseAllTabs": false,
     "launchMode": "maximized",
-    "initialPosition": "-1080",
+    //"initialPosition": "-1080",
     "copyOnSelect": false,
     "copyFormatting": false,
 
-    // A profile specifies a command to execute paired with information about how it should look and feel.
-    // Each one of them will appear in the 'New Tab' dropdown,
-    //   and can be invoked from the commandline with `wt.exe -p xxx`
-    // To learn more about profiles, visit https://aka.ms/terminal-profile-settings
     "profiles":
     {
         "defaults":
@@ -28,10 +23,12 @@
             "cursorColor": "#d4d4d4",
             "colorScheme": "Gruvbox Dark",
             "tabColor": "#282828",
-            //"backgroundImage": "<filelocation>"
-            //"backgroundImageStretchMode": "none"
-            //"backgroundImageAlignment": "bottomRight"
-            "scrollbarState": "hidden"
+            "backgroundImage": "C:/Users/kovervig/rain.gif",
+            "backgroundImageStretchMode": "uniformToFill",
+            "backgroundImageAlignment": "center",
+            "backgroundImageOpacity": 0.25,
+            "scrollbarState": "hidden",
+            "padding":"0,0,0,-10"
         },
         "list":
         [
@@ -76,7 +73,6 @@
             "cyan" : "#689D6A",
             "foreground" : "#EBDBB2",
             "green" : "#98971A",
-            "name" : "Gruvbox Dark",
             "purple" : "#B16286",
             "red" : "#CC241D",
             "white" : "#A89984",
@@ -86,15 +82,10 @@
     "actions":
     [
         { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
-        { "command": "paste", "keys": "ctrl+v" },
         { "command": "find", "keys": "ctrl+f" },
-        { "command": "closeTab", "keys": "ctrl+f4" },
-        { "command": { "action": "splitPane", "split": "vertical", "splitMode": "duplicate" }, "keys": "ctrl+w+v" },
-        { "command": { "action": "splitPane", "split": "horizontal", "splitMode": "duplicate" }, "keys": "ctrl+w+s" },
-        { "command": { "action": "moveFocus", "direction": "down" }, "keys": "ctrl+w+j" },
-        { "command": { "action": "moveFocus", "direction": "left" }, "keys": "ctrl+w+h" },
-        { "command": { "action": "moveFocus", "direction": "right" }, "keys": "ctrl+w+l" },
-        { "command": { "action": "moveFocus", "direction": "up" }, "keys": "ctrl+w+k" },
-        { "command": "closePane", "keys": "f4" }
+        { "command": "newTab", "keys": "ctrl+shift+t" },
+        { "command": { "action": "splitPane", "split": "vertical", "splitMode": "duplicate" }, "keys": "alt+v" },
+        { "command": { "action": "splitPane", "split": "horizontal", "splitMode": "duplicate" }, "keys": "alt+s" },
+        { "command": "closePane", "keys": "ctrl+q" }
     ]
 }
