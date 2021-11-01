@@ -72,3 +72,8 @@ Set-PoshPrompt -Theme jandedobbeleer
 ```
 Update-Module -Name oh-my-posh -Scope CurrentUser
 ```
+
+# Install LazyGit
+https://github.com/jesseduffield/lazygit
+
+# Set up NeoVIM
