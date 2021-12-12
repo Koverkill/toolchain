@@ -77,3 +77,24 @@ Update-Module -Name oh-my-posh -Scope CurrentUser
 https://github.com/jesseduffield/lazygit
 
 # Set up NeoVIM
+sudo apt install neovim
+add alias to bashrc (in personal bashrc)
+mkdir ~/.config/nvim
+touch ~/.config/nvim/init.vim
+
+add:
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vimrc
+colo gruvbox 
+hi Normal guibg=NONE ctermbg=NONE
+
+# Get clip working in wsl
+Download and unzip win32yank-x64
+then add it to your path with: 
+export PATH=$PATH:/mnt/d/win32yank-x64/
+then the added section in your rc should work as expected
+# Get VIM plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
