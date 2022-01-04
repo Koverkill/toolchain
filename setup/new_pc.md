@@ -89,6 +89,13 @@ source ~/.vimrc
 colo gruvbox 
 hi Normal guibg=NONE ctermbg=NONE
 
+## Update NeoVIM
+$ sudo apt remove neovim -y
+Now do you can update normally with the commands:
+$ sudo add-apt-repository ppa:neovim-ppa/stable
+$ sudo apt-get update
+$ sudo apt-get install neovim
+
 # Get clip working in wsl
 Download and unzip win32yank-x64
 then add it to your path with: 
@@ -97,4 +104,9 @@ then the added section in your rc should work as expected
 # Get VIM plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Get bat in wsl ubuntu (for highlighting in FZF)
+sudo apt-get install wget
+wget https://github.com/sharkdp/bat/releases/download/v0.18.3/bat_0.18.3_amd64.deb
+sudo dpkg -i bat_0.18.3_amd64.deb
 
