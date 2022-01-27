@@ -1,6 +1,6 @@
 Plug 'mileszs/ack.vim'
 
-nmap <leader>q :Ack
+nmap <leader>q :Ack 
 nnoremap <leader>a :Ack! <cword><cr>
 vnoremap <leader>a y:Ack! "<C-r>""<CR>
 
