@@ -41,7 +41,7 @@ setting it up from Ubuntu.
 2. sudo chmod +x /usr/local/bin/oh-my-posh
 3. mkdir ~/.poshthemes
 4. wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
-5. if you don't have unzip, sudo apt-install unzip
+5. sudo apt install unzip
 6. unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
 7. chmod u+rw ~/.poshthemes/*.json
 8. rm ~/.poshthemes/themes.zip
@@ -109,4 +109,12 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 sudo apt-get install wget
 wget https://github.com/sharkdp/bat/releases/download/v0.18.3/bat_0.18.3_amd64.deb
 sudo dpkg -i bat_0.18.3_amd64.deb
+
+# Get Ack working with silversearcher (code searching tools)
+sudo apt-get install silversearcher-ag
+
+# TMUX
+sudo apt install tmux
+
+
 

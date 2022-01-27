@@ -1,20 +1,20 @@
 "-------------------------------------------------------------------------------
 " Plugins
 "-------------------------------------------------------------------------------
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
-source ~/.vim/plugins/lightline.vim
-source ~/.vim/plugins/lightline-bufferline.vim
-source ~/.vim/plugins/papercolor-theme.vim
-source ~/.vim/plugins/floaterm.vim
-source ~/.vim/plugins/vim-gitbranch.vim
-source ~/.vim/plugins/auto-pairs.vim
-source ~/.vim/plugins/nerdtree.vim
-source ~/.vim/plugins/nerdcommenter.vim
-source ~/.vim/plugins/ultisnips.vim
-source ~/.vim/plugins/coc.vim
-source ~/.vim/plugins/fzf.vim
-source ~/.vim/plugins/vim-devicons.vim
+source ~/.config/nvim/plugins/lightline.vim
+source ~/.config/nvim/plugins/lightline-bufferline.vim
+source ~/.config/nvim/plugins/tokyonight.vim
+source ~/.config/nvim/plugins/floaterm.vim
+source ~/.config/nvim/plugins/vim-gitbranch.vim
+source ~/.config/nvim/plugins/auto-pairs.vim
+source ~/.config/nvim/plugins/nerdtree.vim
+source ~/.config/nvim/plugins/nerdcommenter.vim
+source ~/.config/nvim/plugins/ultisnips.vim
+source ~/.config/nvim/plugins/fzf.vim
+source ~/.config/nvim/plugins/vim-devicons.vim
+source ~/.config/nvim/plugins/ack.vim
 
 call plug#end()
 
@@ -22,7 +22,7 @@ call plug#end()
 " General Settings
 "-------------------------------------------------------------------------------
 set background=dark
-colorscheme PaperColor
+colorscheme tokyonightstorm
 set number
 set relativenumber 
 set mouse=a
