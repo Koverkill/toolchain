@@ -1,3 +1,8 @@
 alias vim="nvim"
+alias lg="lazygit"
 eval "$(oh-my-posh --init --shell bash --config ~/.poshthemes/microverse-power.omp.json)" 
 export BAT_THEME="base16-256"
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+bind TAB:menu-complete
+bind '"\e[Z": menu-complete-backward'
