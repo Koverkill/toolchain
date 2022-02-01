@@ -76,34 +76,27 @@ Update-Module -Name oh-my-posh -Scope CurrentUser
 # Install LazyGit
 https://github.com/jesseduffield/lazygit
 
-# Set up NeoVIM
-sudo apt install neovim
-add alias to bashrc (in personal bashrc)
-mkdir ~/.config/nvim
-touch ~/.config/nvim/init.vim
-
-add:
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-source ~/.vimrc
-colo gruvbox 
-hi Normal guibg=NONE ctermbg=NONE
-
-## Update NeoVIM
-$ sudo apt remove neovim -y
+# NeoVIM
+```bash
+sudo apt remove neovim -y
+```
 Now do you can update normally with the commands:
-$ sudo add-apt-repository ppa:neovim-ppa/stable
-$ sudo apt-get update
-$ sudo apt-get install neovim
+```bash
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt-get update
+sudo apt-get install neovim
+```
+## Get VIM plug
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+Run :PlugInstall from nvim
 
 # Get clip working in wsl
 Download and unzip win32yank-x64
 then add it to your path with: 
 export PATH=$PATH:/mnt/d/win32yank-x64/
 then the added section in your rc should work as expected
-# Get VIM plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Get bat in wsl ubuntu (for highlighting in FZF)
 sudo apt-get install wget

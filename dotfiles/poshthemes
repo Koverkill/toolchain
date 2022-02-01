@@ -1,0 +1,83 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "plain",
+          "foreground": "#3A86FF",
+          "properties": {
+            "prefix": ""
+          }
+        },
+        {
+          "type": "session",
+          "style": "plain",
+          "foreground": "#f1184c",
+          "properties": {
+            "postfix": " ",
+            "template": "{{ .UserName }}"
+          }
+        },
+        {
+          "type": "root",
+          "style": "plain",
+          "foreground": "#f1184c",
+          "properties": {
+            "prefix": "- root ",
+            "postfix": ""
+          }
+        },
+        {
+          "type": "time",
+          "style": "plain",
+          "foreground": "#FFBB00",
+          "properties": {
+            "time_format": "2006-01-02 15:04:05",
+            "prefix": ""
+          }
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "#33DD2D",
+          "properties": {
+            "prefix": "\uE5FF ",
+            "style": "full",
+            "folder_separator_icon": "/"
+          }
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "#3A86FF",
+          "properties": {
+            "fetch_stash_count": true,
+            "fetch_upstream_icon": true,
+            "prefix": "",
+            "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \uF692 {{ .StashCount }}{{ end }}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#f1184c",
+          "properties": {
+            "prefix": "",
+            "text": "\u279C"
+          }
+        }
+      ]
+    }
+  ]
+}
