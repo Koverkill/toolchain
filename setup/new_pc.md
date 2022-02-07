@@ -36,15 +36,15 @@ If you run into issues cloning a repo in WSL to one of your drives,
 # Setting up Prompt with Oh-My-Posh
 Assumes you are trying to do this after your profiles are all set-up in windows terminal and you have a Nerd Font and you are
 setting it up from Ubuntu.
-``` 
-1. sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
-2. sudo chmod +x /usr/local/bin/oh-my-posh
-3. mkdir ~/.poshthemes
-4. wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
-5. sudo apt install unzip
-6. unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
-7. chmod u+rw ~/.poshthemes/*.json
-8. rm ~/.poshthemes/themes.zip
+``` console
+sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+sudo chmod +x /usr/local/bin/oh-my-posh
+mkdir ~/.poshthemes
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
+sudo apt install unzip
+unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
+chmod u+rw ~/.poshthemes/*.json
+rm ~/.poshthemes/themes.zip
 ```
 to preview themes: 
 ```
@@ -58,7 +58,7 @@ To get it working for powershell:
 From PS:
 1. winget install JanDeDobbeleer.OhMyPosh
 2. create your powershell profile:
-``` Ubuntu
+``` console
 mkdir /mnt/c/Users/kelle/Documents/PowerShell
 touch /mnt/c/Users/kelle/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
 ```
@@ -77,11 +77,11 @@ Update-Module -Name oh-my-posh -Scope CurrentUser
 https://github.com/jesseduffield/lazygit
 
 # NeoVIM
-```bash
+```console
 sudo apt remove neovim -y
 ```
 Now do you can update normally with the commands:
-```bash
+```console
 sudo add-apt-repository ppa:neovim-ppa/stable
 sudo apt-get update
 sudo apt-get install neovim
@@ -109,5 +109,10 @@ sudo apt-get install silversearcher-ag
 # TMUX
 sudo apt install tmux
 
+# Zsh and Oh-my-zsh
+## Install
+sudo apt install zsh
+chsh -s $(which zsh)
 
+# Zsh Auto Complete
 
