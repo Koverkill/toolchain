@@ -113,6 +113,8 @@ sudo apt install tmux
 ## Install
 sudo apt install zsh
 chsh -s $(which zsh)
-
-# Zsh Auto Complete
+## Oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+## Zsh Auto Complete
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
