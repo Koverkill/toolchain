@@ -27,6 +27,7 @@ If you run into issues cloning a repo in WSL to one of your drives,
 3. File > Import > Select 'keys' from toolchain/key_remapping
 4. Will require a PC restart, may want to enable WSL before doing so.
 
+note: if you have a keyboard with special keys, I used a tool called 'sharpkeys' to edit my key registry.
 # Install FantastequeSansMono
 1. https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FantasqueSansMono#installation
 2. Extract the zip > navigate to the True Type Font > Right Click Install
@@ -117,4 +118,8 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ## Zsh Auto Complete
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# pip3 
+sudo apt install python3-pip
+pip3 install -r requirements.txt
 
