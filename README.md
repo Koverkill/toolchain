@@ -35,7 +35,7 @@ The ability to export your linux distro to be used in WSL allows you to move muc
 *Ubuntu is a complete Linux operating system, freely available with both community and professional support.*
 
 While I am far from a Linux distro expert, Ubuntu-18.04 has worked well for me. I have tried Ubuntu-20.04 but the
-current limitations of serial devices was too much of an obstacle for my work flow, I wouln't be suprised if i try a
+current limitations of serial devices was too much of an obstacle for my work flow, I wouln't be suprised if I try a
 new distro and like it more.
 
 ## [Microsoft PowerToys](https://docs.microsoft.com/en-us/windows/powertoys/)
@@ -50,3 +50,7 @@ includes the nice ability to map keys -> chords and vice versa.
 
 ## [Lazygit](https://github.com/jesseduffield/lazygit)
 *Simple terminal UI for git commands.*
+
+## [Win32yank](https://github.com/equalsraf/win32yank)
+This clipboard tool for windows allows copy and pasting from yanked registers in vim. To get it to work you'll need to
+add the directory with the application to your Windows Path.
