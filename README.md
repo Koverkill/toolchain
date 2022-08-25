@@ -43,14 +43,23 @@ new distro and like it more.
 
 I find this useful primarily for 'FancyZones' and for 'Keyboard Manager'. With pre-defined zones you can easily snap
 windows to these zones by holding **Shift** as you drag. Keyboard Manager is my new solution for re-mapping keys and
-includes the nice ability to map keys -> chords and vice versa.
+includes the nice ability to map keys -> chords and vice versa. I recommend turning off 'Enable Find My Mouse' in
+'Mouse Utilities'.
 
 ## [NeoVIM](https://github.com/neovim/neovim/releases)
-*Hyperextensible Vim-based text editor*
+*Hyperextensible Vim-based text editor.*
 
-## [Lazygit](https://github.com/jesseduffield/lazygit)
+## [lazygit](https://github.com/jesseduffield/lazygit)
 *Simple terminal UI for git commands.*
 
+## [spotify-tui](https://github.com/Rigellute/spotify-tui)
+*A Spotify client for the terminal.*
+Download the latest bin
+extract with:
+tar xvf spotify-tui-linux.tar.gz
+add to /usr/bin/
+envoke with spt
+
 ## [Win32yank](https://github.com/equalsraf/win32yank)
-This clipboard tool for windows allows copy and pasting from yanked registers in vim. To get it to work you'll need to
+This clipboard tool for windows allows copy and pasting from yanked registers in nvim. To get it to work you'll need to
 add the directory with the application to your Windows Path.
