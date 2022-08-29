@@ -1,3 +1,8 @@
-# Requirements
-Ease of management. I want a symlink established so when I edit a file in my systems .config/ directory, the copyof the
-file is updated in my .git managed directory (toolchain/dotfiles/config/)
+# Managing your dotfiles with symbolic links + Git
+First delete your ~/.config/ directory if it exists (@note this assumes you want to version control all your .config).
+Then create a symbolic link to your dotfiles/.config/ dir
+``` Shell
+rm -rf ~/.config
+ln -s ~/Projects/toolchain/dotfiles/.config ~/.config
+```
+Now when you edit your configs, they will be automatically be version controlled.
