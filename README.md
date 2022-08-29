@@ -10,8 +10,8 @@ other tools I find helpful in my development workflow.
 
 Choosing what terminal you use influences aesthetics of other tools in your chain. Experimenting with terminals before
 investing time in customizing an editor is worthwhile to find limitations in the terminal layer. I find the tab, pane,
-and visual customization of Windows Terminal to work well for me. The settings.json file in `dotfiles/windows-terminal`
-includes the colorscheme I use across my terminal and editor. Included in the `dotfiles/windows-terminal/fonts` is the
+and visual customization of Windows Terminal to work well for me. The settings.json file in 'dotfiles/windows-terminal'
+includes the colorscheme I use across my terminal and editor. Included in the 'dotfiles/windows-terminal/fonts' is the
 NerdFont that I use across my terminal and editor.
 
 ## [Zsh and Oh-My-Zsh](https://ohmyz.sh/)
@@ -25,10 +25,10 @@ desire to have auto suggestions.
 
 I initially was using WSL as a requirement in our build process for a Linux only utility. While that is no longer a
 need, the workflow in WSL land was nice enough to stay. A couple of things I'll point out:
-- If you can, clone repos within the WSL file system ex: `~/Projects`.
+- If you can, clone repos within the WSL file system ex: '~/Projects'.
 - While there is no problem accessing windows files in the WSL file system, there are some speed benefits keeping files
 used by build tools like IAR in the same file syetem as the build tools.
-- You can access your Linux files in the windows file explorer using `\\wsl$` in the file explorer.
+- You can access your Linux files in the windows file explorer using '\\wsl$' in the file explorer.
 The ability to export your linux distro to be used in WSL allows you to move much of your workflow with relative ease.
 
 ## [Ubuntu-18.04](https://www.microsoft.com/en-us/p/ubuntu-1804-lts/9n9tngvndl3q?activetab=pivot:overviewtab)
