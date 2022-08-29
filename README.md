@@ -54,6 +54,7 @@ includes the nice ability to map keys -> chords and vice versa. I recommend turn
 
 ## [spotify-tui](https://github.com/Rigellute/spotify-tui)
 *A Spotify client for the terminal.*
+
 Download the latest bin
 extract with:
 tar xvf spotify-tui-linux.tar.gz
