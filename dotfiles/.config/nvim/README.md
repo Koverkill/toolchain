@@ -55,3 +55,4 @@ general clutter from not being clear on how the lua config works.
 6. reanimate style notes while in the reanimate dir
 7. Auto reload on buffer change
 8. Start telescope instead of nerdtree
+9. Toggle spotify/lg with same button rather than q
