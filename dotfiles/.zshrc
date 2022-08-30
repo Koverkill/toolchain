@@ -9,10 +9,6 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # Aliases
 
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv="mv -i"
-alias rm="rm -i"
 # tools
 alias lg="lazygit"
 alias vim="nvim"
