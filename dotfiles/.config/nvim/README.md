@@ -39,7 +39,7 @@ general clutter from not being clear on how the lua config works.
 ## Features
 @todo
 ## Feature Wishlist
-1. LSP support for C, Python, Bash, Go, Markdown
+1. LSP support for C, Python, Bash, Go, Markdown, Lua?
 2. Autocompletion
 3. git history by commit of a file (for reanimate work)
 4. Nice Markdown Preview (Glow)
@@ -50,3 +50,8 @@ general clutter from not being clear on how the lua config works.
 2. :Ack! weirdness
 3. rg for non reanimate directories i.e. this error message 
 (|| No files were searched, which means ripgrep probably applied a filter you didn't expect. Try running again with --debug.)
+4. Named ack buffer
+5. .h files as c file types rather than cpp
+6. reanimate style notes while in the reanimate dir
+7. Auto reload on buffer change
+8. Start telescope instead of nerdtree

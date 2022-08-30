@@ -23,9 +23,14 @@ export PATH="/bin:/usr/bin:/usr/local/bin:/home/kovervig/local/bin:/home/kovervi
 export PATH="$HOME/tools/llvm-project/build/bin:$HOME/clangd/clangd/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/tools/llvm-project/build/lib:$LD_LIBRARY_PATH"
 
+# Source my helper funcs
+source <(cat $HOME/scripts/*.sh)
+
 # ZSH
 plugins=(git zsh-autosuggestions web-search)
+
 # Path to your oh-my-zsh installation.
 source $ZSH/oh-my-zsh.sh
+
 # oh-my-zsh
 eval "$(oh-my-posh --init --shell zsh --config '~/.poshthemes/microverse-power.omp.json')"
