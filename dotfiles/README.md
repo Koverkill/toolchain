@@ -6,3 +6,4 @@ rm -rf ~/.config
 ln -s ~/Projects/toolchain/dotfiles/.config ~/.config
 ```
 Now when you edit your configs, they will be automatically be version controlled.
+Remember to provide the **full** path to the source folder/file, not the relative one.
