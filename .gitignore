@@ -1,1 +1,2 @@
-dotfiles/.config/lazygit/state
+dotfiles/.config/lazygit/state.yml
+dotfiles/.config/spotify-tui/.spotify_token_cache.json
