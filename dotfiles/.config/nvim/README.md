@@ -45,6 +45,7 @@ general clutter from not being clear on how the lua config works.
 4. Nice Markdown Preview (Glow)
 5. vim-surround
 6. snippets
+7. spellcheck for comments and markdown/txt files
 ## Behavior Change Wishlist
 1. Better buffer open/close behavior
 2. :Ack! weirdness
@@ -56,3 +57,4 @@ general clutter from not being clear on how the lua config works.
 7. Auto reload on buffer change
 8. Start telescope instead of nerdtree
 9. Toggle spotify/lg with same button rather than q
+10. Smart sentence wrapping, auto formatting for .md files (near end of 120)

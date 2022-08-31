@@ -6,23 +6,20 @@
 export EDITOR="nvim"
 export MANPAGER="nvim +Man!"
 export ZSH="$HOME/.oh-my-zsh"
+export LD_LIBRARY_PATH="$HOME/tools/llvm-project/build/lib:$LD_LIBRARY_PATH"
 
 # Aliases
-
-# tools
 alias lg="lazygit"
 alias vim="nvim"
 alias xsdk="python3 -m xsdk"
 
-export PATH="/bin:/usr/bin:/usr/local/bin:/home/kovervig/local/bin:/home/kovervig/scripts/:/usr/local/go/bin:/home/kovervig/glow/:/home/kovervig/nvim-linux64/bin/:$PATH"
-
-export PATH="$HOME/tools/llvm-project/build/bin:$HOME/clangd/clangd/bin:$PATH"
-export LD_LIBRARY_PATH="$HOME/tools/llvm-project/build/lib:$LD_LIBRARY_PATH"
+# Exports
+export PATH="/bin:/usr/bin:/usr/local/bin:/home/kovervig/local/bin:/home/kovervig/scripts/:/usr/local/go/bin:/home/kovervig/glow/:/home/kovervig/nvim-linux64/bin/:$HOME/tools/llvm-project/build/bin:$HOME/clangd/clangd/bin:$PATH"
 
 # Source my helper funcs
 source <(cat $HOME/scripts/*.sh)
 
-# ZSH
+# ZSH plugins
 plugins=(git zsh-autosuggestions web-search)
 
 # Path to your oh-my-zsh installation.
