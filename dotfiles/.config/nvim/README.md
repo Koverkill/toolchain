@@ -49,7 +49,7 @@ general clutter from not being clear on how the lua config works.
 ## Behavior Change Wishlist
 1. Better buffer open/close behavior
 2. :Ack! weirdness
-3. rg for non reanimate directories i.e. this error message 
+3. rg for non reanimate directories i.e. this error message:
 (|| No files were searched, which means ripgrep probably applied a filter you didn't expect. Try running again with --debug.)
 4. Named ack buffer
 5. .h files as c file types rather than cpp
@@ -58,3 +58,4 @@ general clutter from not being clear on how the lua config works.
 8. Start telescope instead of nerdtree
 9. Toggle spotify/lg with same button rather than q
 10. Smart sentence wrapping, auto formatting for .md files (near end of 120)
+11. ^I being inserted with plain text paste
