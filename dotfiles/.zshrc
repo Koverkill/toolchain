@@ -1,5 +1,5 @@
 # Kellen Overvig (koverkill)
-# https://github.com/Koverkill
+# github.com/Koverkill
 # My ZSH config
 
 # Exports
