@@ -8,6 +8,8 @@ map('n', '<C-P>', ':Telescope find_files hidden=true<CR>', { noremap = true, sil
 map('n', '<Leader>e', ':NERDTreeToggle<CR><C-w>=', { noremap = true, silent = true })
 map('n', '<Leader>a', ':Ack! <cword><CR>', { noremap = true, silent = true })
 map('n', '<Leader>q', ':Ack', { noremap = true, silent = true })
+map('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+map('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
  for i = 1, 9, 1 do
      map('n', string.format('<Leader>%d', i),
