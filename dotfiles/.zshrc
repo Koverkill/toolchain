@@ -20,7 +20,7 @@ export PATH="/bin:/usr/bin:/usr/local/bin:/home/kovervig/local/bin:/home/kovervi
 source <(cat $HOME/scripts/*.sh)
 
 # ZSH plugins
-plugins=(git zsh-autosuggestions web-search)
+plugins=(git zsh-autosuggestions web-search zsh-syntax-highlighting)
 
 # Path to your oh-my-zsh installation.
 source $ZSH/oh-my-zsh.sh
