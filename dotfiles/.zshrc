@@ -22,6 +22,11 @@ source <(cat $HOME/scripts/*.sh)
 # ZSH plugins
 plugins=(git zsh-autosuggestions web-search zsh-syntax-highlighting)
 
+# Remove Underline
+(( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
 # Path to your oh-my-zsh installation.
 source $ZSH/oh-my-zsh.sh
 
