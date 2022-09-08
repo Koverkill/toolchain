@@ -125,3 +125,36 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 sudo apt install python3-pip
 pip3 install -r requirements.txt
 
+# LSP set up for rean
+## Install CMake
+https://cmake.org/download/
+tar xzf cmake-3.24.1.tar.gz
+cmake --version
+sudo apt install libclang-9-dev
+## Install Clang
+sudo apt install clang-9 --install-suggests
+clang-9 --version
+sudo ln /usr/bin/clang-9 /usr/bin/clang
+## GNU Make
+@todo copy this from work setup
+make --version
+## clang+llvm
+https://releases.llvm.org/download.html
+grabbed 10.0.0 ubuntu18.04
+sudo tar xvf clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+rm -rf clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+mkdir /usr/local/clang/10.0.0
+cp -a clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04 /usr/local/clang/10.0.0
+
+## Note this might work instead..
+wget -c http://releases.llvm.org/8.0.0/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+tar xf clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$PWD/clang+llvm-8.0.0-x86_64-linux-gnu-ubuntu-18.04
+cmake --build Release
+
+## build
+git clone --depth=1 --recursive https://github.com/MaskRay/ccls
+cd ccls
+cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/clang/10.0.0
+cmake --build Release
+
