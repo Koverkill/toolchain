@@ -1,13 +1,16 @@
--- File Overview
--- Plugin Manager - Packer Installation
--- Plugin Installation
--- General Settings
--- Colorscheme Settings
--- General Keymaps
--- Autocommands
--- Plugin Settings
+--------------------------------------------------------------------------------
+-- File Overview ---------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- 1. Plugin Manager and Installation
+-- 2. General Settings
+-- 3. Colorscheme Settings
+-- 4. General Keymaps
+-- 5. Autocommands
+-- 6. Plugin Settings
 
--- Plugin Manager - Packer Installation ----------------------------------------
+--------------------------------------------------------------------------------
+-- 1. Plugin Managemer and Installation ----------------------------------------
+--------------------------------------------------------------------------------
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -16,15 +19,23 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd [[packadd packer.nvim]]
 end
 
--- Plugin Installation ---------------------------------------------------------
 require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim' -- Plugin Manager
-    use 'folke/tokyonight.nvim' -- Color Theme
-    use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } } -- Status Line
-    use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'} -- Buffer Line
-    use 'nvim-treesitter/nvim-treesitter' -- Language Parsing and Highlighting
-    use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } } -- Fuzzy Finder
+    -- Plugin Manager
+    use 'wbthomason/packer.nvim'
+     -- Color Theme
+    use 'folke/tokyonight.nvim'
+    -- Status Line
+    use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+    -- Buffer Line
+    use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+    -- Language Parsing and Highlighting
+    use 'nvim-treesitter/nvim-treesitter'
+    -- Fuzzy Finder
+    use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+    -- Terminal Wrapper
     use 'akinsho/nvim-toggleterm.lua'
+    -- Autopairs
+    use 'windwp/nvim-autopairs'
 
     if is_bootstrap then
         require('packer').sync()
@@ -47,7 +58,9 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     pattern = vim.fn.expand '$MYVIMRC',
 })
 
--- General Settings ------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- 2. General Settings ---------------------------------------------------------
+--------------------------------------------------------------------------------
 vim.o.updatetime = 250
 vim.o.number = true
 vim.o.splitright = true
@@ -67,7 +80,7 @@ vim.o.encoding = 'utf-8'
 vim.o.fileencoding = 'utf-8'
 vim.o.showmode = false
 vim.o.swapfile = false
-vim.o.colorcolumn = '80,120'
+vim.o.colorcolumn = '80'
 vim.o.scrolloff = 8
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -75,76 +88,81 @@ vim.o.list = true
 vim.o.listchars = 'trail:*'
 vim.o.mouse = 'a'
 
--- Colorscheme Settings --------------------------------------------------------
+--------------------------------------------------------------------------------
+-- 3. Colorscheme Settings -----------------------------------------------------
+--------------------------------------------------------------------------------
 require("tokyonight").setup({
     style = "storm",
     styles = {
         comments = "NONE",
         keywords = "NONE",
-        functions = "NONE",
-        variables = "NONE",
     },
 })
 
 vim.cmd[[colorscheme tokyonight]]
 
--- General Keymaps -------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- 4. General Keymaps ----------------------------------------------------------
+--------------------------------------------------------------------------------
+    -- <Space> as Leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- wsl-clipboard
-vim.cmd([[set clipboard+=unnamedplus]])
-vim.g.clipboard = {
-    name = "win32yank-wsl",
-    copy = {
-        ["+"] = "win32yank.exe -i --crlf",
-        ["*"] = "win32yank.exe -i --crlf"
-    },
-    paste = {
-        ["+"] = "win32yank.exe -o --crlf",
-        ["*"] = "win32yank.exe -o --crlf"
-    },
-    cache_enable = 0,
-}
-
--- Functional wrapper for mapping custom keybindings
-function map(mode, lhs, rhs, opts)
-    local options = { noremap = true }
-    if opts then
-        options = vim.tbl_extend("force", options, opts)
-    end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    -- Copy/Paste with win32yank, a wsl clipboard util
+if vim.fn.executable('win32yank.exe') == 1 then
+    vim.cmd([[set clipboard+=unnamedplus]])
+    vim.g.clipboard = {
+        name = 'win32yank-wsl',
+        copy = {
+            ['+'] = 'win32yank.exe -i --crlf',
+            ['*'] = 'win32yank.exe -i --crlf'
+        },
+        paste = {
+            ['+'] = 'win32yank.exe -o --crlf',
+            ['*'] = 'win32yank.exe -o --crlf'
+        },
+        cache_enable = 0,
+    }
 end
 
+function map(mode, lhs, rhs, opts)
+    local options = { noremap = true, silent = true }
+    vim.keymap.set(mode, lhs, rhs, opts)
+end
+    -- Shift visual blocks up and down with K/J
 map('v', 'J', ":m '>+1<CR>gv=gv")
 map('v', 'K', ":m '<-2<CR>gv=gv")
-map('n', '<Leader>e', ":Explore<CR>")
+    -- Netrw for file exploration
+map('n', '<Leader>e', ':Explore<CR>')
+    -- Accept 1st spelling suggestion
+map('n', '<Leader>z', '1z=')
 
--- Autocommands ----------------------------------------------------------------
--- create a group to avoid reloading autocommands each time you source init.lua
--- @todo there must be a cleaner way
-local markdown_group = vim.api.nvim_create_augroup('Markdown', { clear = true})
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.md" },
-    command = "setlocal spell | map('<buffer>', '<Leader>z', '1z=')", -- buffer remap for correcting spelling
-    group = markdown_group,
-})
+--------------------------------------------------------------------------------
+-- 5. Autocommands -------------------------------------------------------------
+--------------------------------------------------------------------------------
+    -- Wrap lines differently in text files
+    -- Don't add comment on newline
+    -- Tweak filetype recognition
+vim.cmd[[
+function! TextEditMode()
+    setlocal textwidth=120
+    setlocal colorcolumn=120
+    setlocal wrap
+    setlocal linebreak
+endfunction
 
-local c_group = vim.api.nvim_create_augroup('C', { clear = true})
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.h" },
-    command = "setfiletype=c",
-    group = c_group,
-})
+augroup files
+    autocmd!
+    autocmd BufWinEnter * :set formatoptions-=c formatoptions-=r formatoptions-=o
+    autocmd BufRead,BufNewFile *.md,*.txt call TextEditMode()
+    autocmd BufRead,BufNewFile *.h set filetype=c
+    autocmd BufRead,BufNewFile *.tbpy set filetype=python
+augroup END
+]]
 
-local tbpy_group = vim.api.nvim_create_augroup('tbpy', { clear = true})
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.tbpy" },
-    command = "setfiletype=python",
-    group = tbpy_group,
-})
-
+--------------------------------------------------------------------------------
+-- 6. Plugin Settings ----------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Plugin Settings: Lualine ----------------------------------------------------
--- See ':help lualine.txt'
 require('lualine').setup {
     options = {
         icons_enabled = true,
@@ -160,8 +178,8 @@ require('lualine').setup {
         }
     }
 }
+
 -- Plugin Settings: Bufferline -------------------------------------------------
--- See ':help bufferline.txt'
 require('bufferline').setup {
     options = {
         numbers = function(opts)
@@ -203,7 +221,6 @@ map('n', '<Leader>c-', '<Cmd>BufferLineCloseLeft<CR>')
 map('n', '<Leader>c', ':BufferLinePickClose<CR>')
 
 -- Plugin Settings: Treesitter -------------------------------------------------
--- See ':help treesitter.txt
 require'nvim-treesitter.configs'.setup {
     ensure_installed = { "bash", "c", "go", "json", "lua", "python", "vim" },
     highlight = {
@@ -213,7 +230,6 @@ require'nvim-treesitter.configs'.setup {
 }
 
 -- Plugin Settings: Telescope --------------------------------------------------
--- See ':help telescope' and ':help telescope.setup()'
 require('telescope').setup {
     defaults = {
         vimgrep_arguments = {
@@ -232,35 +248,8 @@ require('telescope').setup {
             ".gitmodules",
             ".gitignore",
             ".fdignore",
-            "libraries/alt1250",
-            "libraries/aws_iot",
-            "libraries/coap",
-            "libraries/jsmn",
-            "libraries/json",
-            "libraries/libefs",
-            "libraries/libvbus",
-            "libraries/lr1110",
-            "libraries/mbedtls",
-            "libraries/miniz",
-            "libraries/msgpack",
-            "libraries/newlib-cygwin",
-            "libraries/qapi",
-            "libraries/qtapi",
-            "libraries/threadx_api",
-            "%.bin",
-            "%.x00",
-            "%.o",
-            "%.lst",
-            "%.i",
-            "%.s",
-            "%.xcl",
-            "ewp/",
-            ".artifacts/",
-            ".vscode/",
-            "doxy/",
-            "build/",
-            "tags",
         },
+        color_devicons = true
     }
 }
 map('n', '<C-P>', ':Telescope find_files hidden=true<CR>')
@@ -268,8 +257,7 @@ map('n', '<Leader>q', ':Telescope live_grep disable_coordinates=true<CR>')
 map('n', '<Leader>a', ':Telescope grep_string disable_coordinates=true<CR>')
 
 -- Plugin Settings: Toggleterm -------------------------------------------------
--- See 'help toggleterm.txt
-require("toggleterm").setup{
+require('toggleterm').setup{
     size = 18,
     open_mapping = '<F1>',
     hide_numbers = true,
@@ -286,28 +274,34 @@ require("toggleterm").setup{
 
 function _G.set_terminal_keymaps()
     local opts = {buffer = 0}
-    vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-    vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
-    vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-    vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-    vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-    vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+    map('t', '<esc>', [[<C-\><C-n>]], opts)
+    map('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+    map('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+    map('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+    map('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 end
 
 vim.cmd('autocmd! TermOpen zsh;#toggleterm* lua set_terminal_keymaps()')
 
 local Terminal  = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", direction='float', hidden = true })
-local spotify = Terminal:new({ cmd = "spt", direction='float', hidden = true })
 
-function _lazygit_toggle()
-    lazygit:toggle()
+    -- lazygit: git tui
+if vim.fn.executable('lazygit') == 1 then
+    local lazygit = Terminal:new({ cmd = "lazygit", direction='float', hidden = true })
+    function _lazygit_toggle()
+        lazygit:toggle()
+    end
+    map('n', '<Leader>lg', '<cmd>lua _lazygit_toggle()<CR>')
 end
 
-function _spotify_toggle()
-    spotify:toggle()
+    -- spt: spotify tui
+if vim.fn.executable('spt') == 1 then
+    local spotify = Terminal:new({ cmd = "spt", direction='float', hidden = true })
+    function _spotify_toggle()
+        spotify:toggle()
+    end
+    map('n', '<F3>', '<cmd>lua _spotify_toggle()<CR>')
 end
 
-map('n', '<Leader>lg', '<cmd>lua _lazygit_toggle()<CR>')
-map('n', '<F3>', '<cmd>lua _spotify_toggle()<CR>')
----- .
+-- Plugin Settings: Auto Pairs -------------------------------------------------
+require('nvim-autopairs').setup{}
