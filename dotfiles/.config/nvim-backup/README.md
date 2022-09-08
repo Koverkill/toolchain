@@ -2,6 +2,10 @@
 This is my neovim config post conversion to lua. There are still some artifacts of vimscript from my old config and some
 general clutter from not being clear on how the lua config works.
 
+## Rules
+- Behavior Changes should be easy to implement.
+- Remove duplicates.
+
 ## Screenshots/videos
 @todo
 
@@ -23,7 +27,7 @@ general clutter from not being clear on how the lua config works.
     └── xirgo.lua           (work specific settings)
 ```
 
-## Improved Architecture [CNULL] (https://github.com/creativenull/nvim-config)
+## CNULL's Architecture [CNULL] (https://github.com/creativenull/nvim-config)
 ```
 ├── init.lua               (Starting point)
 ├── after
@@ -36,6 +40,25 @@ general clutter from not being clear on how the lua config works.
         └── user           (My custom user configuration independent of plugins)
 ```
 
+## New Architecture (Nice!)
+```
+.
+├── README.md               # You're looking at it boss
+├── after
+│   └── ftplugin            # file specific settings
+├── init.lua                # main entry point
+├── lua
+│   ├── config/             # plugin specific configurations and keybinds
+│   ├── autocmd.lua         # autocommands - :h autocmd.txt
+│   ├── functions.lua       # lua functions to extend functionality
+│   ├── mappings.lua        # Vim keymaps definitions -> config/which.lua for more
+│   ├── options.lua         # non plugin related (vim) options
+│   ├── plugins.lua         # define plugins to be managed via Packer
+│   └── user-conf.lua       # parameters to configure some settings
+├── plugin                  # packer_compiled
+├── snippets                # snippets directory (luasnip style)
+└── spell                   # my spell files linked from another repo
+```
 ## Features
 @todo
 ## Feature Wishlist
@@ -46,6 +69,13 @@ general clutter from not being clear on how the lua config works.
 5. vim-surround
 6. snippets
 7. spellcheck for comments and markdown/txt files
+## File type plugins
+```
+├── after
+│   └── ftplugin      # file specific settings
+```
+1. Enable spellcheck for md and txt files
+
 ## Behavior Change Wishlist
 1. Better buffer open/close behavior
 2. :Ack! weirdness
@@ -59,3 +89,4 @@ general clutter from not being clear on how the lua config works.
 9. Toggle spotify/lg with same button rather than q
 10. Smart sentence wrapping, auto formatting for .md files (near end of 120)
 11. ^I being inserted with plain text paste
+12. Avoid jumping to the wrong cellular library
