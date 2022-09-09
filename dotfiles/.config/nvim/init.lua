@@ -1,12 +1,15 @@
+-- init.lua (requires NVIM v0.7)
+-- Kellen Overvig
+-- github.com/Koverkill
+
 --------------------------------------------------------------------------------
--- File Overview ---------------------------------------------------------------
+-- Overview --------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- 1. Plugin Manager and Installation
 -- 2. General Settings
--- 3. Colorscheme Settings
--- 4. General Keymaps
--- 5. Autocommands
--- 6. Plugin Settings
+-- 3. Functions and Autocommands
+-- 4. Plugin Settings
+-- 5. Keymaps
 
 --------------------------------------------------------------------------------
 -- 1. Plugin Managemer and Installation ----------------------------------------
@@ -20,22 +23,22 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup(function(use)
-    -- Plugin Manager
+    -- Plugin Manager --
     use 'wbthomason/packer.nvim'
-     -- Color Theme
+    -- Color Theme --
     use 'folke/tokyonight.nvim'
-    -- Status Line
-    use { 'hoob3rt/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
-    -- Buffer Line
-    use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
-    -- Language Parsing and Highlighting
+    -- Status Line --
+    use { 'hoob3rt/lualine.nvim' }
+    -- Buffer Line --
+    use {'akinsho/bufferline.nvim' }
+    -- Language Parsing and Highlighting --
     use 'nvim-treesitter/nvim-treesitter'
-    -- Fuzzy Finder
+    -- Fuzzy Finder --
     use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-    -- Terminal Wrapper
+    -- Terminal Wrapper --
     use 'akinsho/nvim-toggleterm.lua'
-    -- Autopairs
-    use 'windwp/nvim-autopairs'
+    -- Autopairs --
+    use { 'windwp/nvim-autopairs', config = function() require('nvim-autopairs').setup {} end }
 
     if is_bootstrap then
         require('packer').sync()
@@ -88,26 +91,18 @@ vim.o.list = true
 vim.o.listchars = 'trail:*'
 vim.o.mouse = 'a'
 
---------------------------------------------------------------------------------
--- 3. Colorscheme Settings -----------------------------------------------------
---------------------------------------------------------------------------------
-require("tokyonight").setup({
-    style = "storm",
+    -- Colorscheme --
+require('tokyonight').setup({
+    style = 'storm',
     styles = {
-        comments = "NONE",
-        keywords = "NONE",
+        comments = 'NONE',
+        keywords = 'NONE',
     },
 })
 
 vim.cmd[[colorscheme tokyonight]]
 
---------------------------------------------------------------------------------
--- 4. General Keymaps ----------------------------------------------------------
---------------------------------------------------------------------------------
-    -- <Space> as Leader
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-    -- Copy/Paste with win32yank, a wsl clipboard util
+    -- Copy/Paste with win32yank, a wsl clipboard util --
 if vim.fn.executable('win32yank.exe') == 1 then
     vim.cmd([[set clipboard+=unnamedplus]])
     vim.g.clipboard = {
@@ -124,45 +119,60 @@ if vim.fn.executable('win32yank.exe') == 1 then
     }
 end
 
+    -- Space is King! --
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+--------------------------------------------------------------------------------
+-- 3. Functions and Autocommands -----------------------------------------------
+--------------------------------------------------------------------------------
+    -- keymap helper --
 function map(mode, lhs, rhs, opts)
     local options = { noremap = true, silent = true }
     vim.keymap.set(mode, lhs, rhs, opts)
 end
-    -- Shift visual blocks up and down with K/J
-map('v', 'J', ":m '>+1<CR>gv=gv")
-map('v', 'K', ":m '<-2<CR>gv=gv")
-    -- Netrw for file exploration
-map('n', '<Leader>e', ':Explore<CR>')
-    -- Accept 1st spelling suggestion
-map('n', '<Leader>z', '1z=')
 
---------------------------------------------------------------------------------
--- 5. Autocommands -------------------------------------------------------------
---------------------------------------------------------------------------------
-    -- Wrap lines differently in text files
-    -- Don't add comment on newline
-    -- Tweak filetype recognition
+    -- Use ctrl+vim movements in Terminal mode --
+function _G.set_terminal_keymaps()
+    local opts = { buffer = 0 }
+    map('t', '<esc>', [[<Cmd>close<CR>]], opts)
+    map('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+    map('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+    map('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+    map('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+
+    -- Change editor behavior for text files --
+function _G.text_edit_mode()
+    vim.o.spell = true
+    vim.o.textwidth = 120
+    vim.o.colorcolumn = '120'
+    vim.o.wrap = true
+    vim.o.linebreak = true
+    -- Accept 1st spelling suggestion with <Leader>z --
+    map('n', '<Leader>z', '1z=')
+end
+
+    -- Using vim script for augroups for now --
 vim.cmd[[
-function! TextEditMode()
-    setlocal textwidth=120
-    setlocal colorcolumn=120
-    setlocal wrap
-    setlocal linebreak
-endfunction
-
 augroup files
+    "" Don't add comment on newline
+    "" Always open :help in new Vertical window
+    "" Tweak filetype recognition
     autocmd!
     autocmd BufWinEnter * :set formatoptions-=c formatoptions-=r formatoptions-=o
-    autocmd BufRead,BufNewFile *.md,*.txt call TextEditMode()
+    autocmd BufEnter * if &ft ==# 'help' | wincmd L | endif
+    autocmd TermOpen term://* lua set_terminal_keymaps()
+    autocmd BufRead,BufNewFile *.md,*.txt lua text_edit_mode()
     autocmd BufRead,BufNewFile *.h set filetype=c
-    autocmd BufRead,BufNewFile *.tbpy set filetype=python
+    autocmd BufRead,BufNewFile *.*py set filetype=python
 augroup END
 ]]
 
 --------------------------------------------------------------------------------
--- 6. Plugin Settings ----------------------------------------------------------
+-- 4. Plugin Settings ----------------------------------------------------------
 --------------------------------------------------------------------------------
--- Plugin Settings: Lualine ----------------------------------------------------
+    -- Plugin Settings: Lualine --
 require('lualine').setup {
     options = {
         icons_enabled = true,
@@ -179,7 +189,7 @@ require('lualine').setup {
     }
 }
 
--- Plugin Settings: Bufferline -------------------------------------------------
+    -- Plugin Settings: Bufferline --
 require('bufferline').setup {
     options = {
         numbers = function(opts)
@@ -204,34 +214,32 @@ require('bufferline').setup {
         persist_buffer_sort = true,
         enforce_regular_tabs = false,
         always_show_bufferline = true,
-        sort_by = "id",
+        sort_by = 'id',
         color_icons = true,
         show_buffer_default_icon = true,
     },
 }
 
-for i = 1, 9, 1 do
-    map('n', string.format('<Leader>%d', i),
-    string.format('<Cmd>BufferLineGoToBuffer %d<CR>', i))
-end
-map('n', '<Leader>=', '<Cmd>BufferLineCycleNext<CR>')
-map('n', '<Leader>-', '<Cmd>BufferLineCyclePrev<CR>')
-map('n', '<Leader>c=', '<Cmd>BufferLineCloseRight<CR>')
-map('n', '<Leader>c-', '<Cmd>BufferLineCloseLeft<CR>')
-map('n', '<Leader>c', ':BufferLinePickClose<CR>')
-
--- Plugin Settings: Treesitter -------------------------------------------------
+    -- Plugin Settings: Treesitter --
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = { "bash", "c", "go", "json", "lua", "python", "vim" },
+    ensure_installed = { 'bash', 'c', 'go', 'json', 'lua', 'python', 'vim' },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
     },
 }
 
--- Plugin Settings: Telescope --------------------------------------------------
+    -- Plugin Settings: Telescope --
 require('telescope').setup {
     defaults = {
+        layout_strategy = 'horizontal',
+        layout_config = {
+            prompt_position = 'top',
+            height = 0.95,
+            width = 0.95,
+        },
+        disable_coordinates = true,
+        hidden = true,
         vimgrep_arguments = {
             'rg',
             '--color=never',
@@ -244,22 +252,17 @@ require('telescope').setup {
             '--hidden'
         },
         file_ignore_patterns = {
-            ".git/",
-            ".gitmodules",
-            ".gitignore",
-            ".fdignore",
+            '.git/',
+            '.gitmodules',
+            '.gitignore',
+            '.fdignore',
         },
-        color_devicons = true
     }
 }
-map('n', '<C-P>', ':Telescope find_files hidden=true<CR>')
-map('n', '<Leader>q', ':Telescope live_grep disable_coordinates=true<CR>')
-map('n', '<Leader>a', ':Telescope grep_string disable_coordinates=true<CR>')
 
--- Plugin Settings: Toggleterm -------------------------------------------------
+    -- Plugin Settings: Toggleterm --
 require('toggleterm').setup{
     size = 18,
-    open_mapping = '<F1>',
     hide_numbers = true,
     shade_filetypes = {},
     shade_terminals = true,
@@ -272,36 +275,60 @@ require('toggleterm').setup{
     shell = vim.o.shell,
 }
 
-function _G.set_terminal_keymaps()
-    local opts = {buffer = 0}
-    map('t', '<esc>', [[<C-\><C-n>]], opts)
-    map('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-    map('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-    map('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-    map('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-end
-
-vim.cmd('autocmd! TermOpen zsh;#toggleterm* lua set_terminal_keymaps()')
-
 local Terminal  = require('toggleterm.terminal').Terminal
 
-    -- lazygit: git tui
-if vim.fn.executable('lazygit') == 1 then
-    local lazygit = Terminal:new({ cmd = "lazygit", direction='float', hidden = true })
+    -- lazygit: git tui --
+    local lazygit = Terminal:new({ cmd = 'lazygit', direction='float', hidden = true })
     function _lazygit_toggle()
-        lazygit:toggle()
+        if vim.fn.executable('lazygit') == 1 then
+            lazygit:toggle()
+        end
     end
-    map('n', '<Leader>lg', '<cmd>lua _lazygit_toggle()<CR>')
-end
 
-    -- spt: spotify tui
-if vim.fn.executable('spt') == 1 then
-    local spotify = Terminal:new({ cmd = "spt", direction='float', hidden = true })
+    -- spt: spotify tui --
+    local spotify = Terminal:new({ cmd = 'spt', direction='float', hidden = true })
     function _spotify_toggle()
-        spotify:toggle()
+        if vim.fn.executable('spt') == 1 then
+            spotify:toggle()
+        end
     end
-    map('n', '<F3>', '<cmd>lua _spotify_toggle()<CR>')
-end
 
--- Plugin Settings: Auto Pairs -------------------------------------------------
-require('nvim-autopairs').setup{}
+--------------------------------------------------------------------------------
+-- 5. Keymaps ------------------------------------------------------------------
+--------------------------------------------------------------------------------
+    -- Window movement/moving --
+map('n', '<Leader>k', ':wincmd k<CR>')
+map('n', '<Leader>j', ':wincmd j<CR>')
+map('n', '<Leader>h', ':wincmd h<CR>')
+map('n', '<Leader>l', ':wincmd l<CR>')
+map('n', '<Leader>v', ':wincmd v<CR>')
+map('n', '<Leader>s', ':wincmd s<CR>')
+map('n', '<Leader>q', ':wincmd q<CR>')
+    -- Shift visual blocks up and down with K/J --
+map('v', 'J', ":m '>+1<CR>gv=gv")
+map('v', 'K', ":m '<-2<CR>gv=gv")
+
+    -- Netrw for file exploration --
+map('n', '<Leader>e', ':Explore<CR>')
+
+    -- Bufferline --
+for i = 1, 9, 1 do
+    map('n', string.format('<Leader>%d', i),
+    string.format('<Cmd>BufferLineGoToBuffer %d<CR>', i))
+end
+map('n', '<Leader>]', '<Cmd>BufferLineCycleNext<CR>')
+map('n', '<Leader>[', '<Cmd>BufferLineCyclePrev<CR>')
+map('n', '<Leader>bc', ':BufferLinePickClose<CR>')
+map('n', '<Leader>bc]', '<Cmd>BufferLineCloseRight<CR>')
+map('n', '<Leader>bc[', '<Cmd>BufferLineCloseLeft<CR>')
+
+    -- Telescope --
+map('n', '<C-P>', ':Telescope find_files <CR>')
+map('n', '<Leader>f', ':Telescope live_grep <CR>')
+map('n', '<Leader>a', ':Telescope grep_string <CR>')
+map('n', '<Leader>r', ':Telescope resume <CR>')
+
+    -- Toggleterm --
+map('n', '<Leader>t', '<Cmd>execute v:count . "ToggleTerm"<CR>')
+map('n', '<Leader>g', '<cmd>lua _lazygit_toggle()<CR>')
+map('n', '<F3>', '<cmd>lua _spotify_toggle()<CR>')
