@@ -28,9 +28,9 @@ require('packer').startup(function(use)
     -- Color Theme --
     use 'folke/tokyonight.nvim'
     -- Status Line --
-    use { 'hoob3rt/lualine.nvim' }
+    use 'hoob3rt/lualine.nvim'
     -- Buffer Line --
-    use {'akinsho/bufferline.nvim' }
+    use 'akinsho/bufferline.nvim'
     -- Language Parsing and Highlighting --
     use 'nvim-treesitter/nvim-treesitter'
     -- Fuzzy Finder --
@@ -239,7 +239,6 @@ require('telescope').setup {
             width = 0.95,
         },
         disable_coordinates = true,
-        hidden = true,
         vimgrep_arguments = {
             'rg',
             '--color=never',
@@ -257,6 +256,11 @@ require('telescope').setup {
             '.gitignore',
             '.fdignore',
         },
+    },
+    pickers = {
+        find_files = {
+            hidden = true,
+        }
     }
 }
 
