@@ -112,8 +112,11 @@ sudo apt install tmux
 
 # Zsh and Oh-my-zsh
 ## Install
+``` Shell
 sudo apt install zsh
-chsh -s $(which zsh)
+sudo chsh -s $(which zsh)
+```
+restart terminal
 ## Oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ## Zsh Auto Complete
@@ -158,3 +161,18 @@ cd ccls
 cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/clang/10.0.0
 cmake --build Release
 
+# Steps to set up dev work env
+-- after wsl setup
+-- clone toolchain to ~/Projects/
+sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+sudo chmod +x /usr/local/bin/oh-my-posh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+rm -rf ~/.zshrc
+ln -s ~/Project/toolchain/dotfiles/.zshrc ~/.zshrc
+
+-- back up old config if exising
+mv ~/.config ~/.config-backup
+
+-- other dependencies
+ripgrep
+sudo apt-get install ripgrep
