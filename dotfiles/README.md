@@ -11,12 +11,16 @@
 │       ├──plugin                   (Automatically generated via nvim plugin manger)
 │       │  └── packer_compiled.lua  (Automatically generated via nvim plugin manger)
 │       └─ init.lua                 (All in one nvim config)
+│
 ├── oh-my-posh                      (Shell prompt)
 │   └── my-microverse.omp.json      (Shell prompt colorscheme)
+│
 ├── windows-terminal                (Terminal application)
 │   ├── fonts                       (Terminal, shell, and editor font)
 │   └── settings.json               (Terminal config)
+│
 ├── .zshrc                          (Shell config)
+│
 └── README.md                       (You're looking at it boss)
 ```
 ## Version control your ~/.config directory

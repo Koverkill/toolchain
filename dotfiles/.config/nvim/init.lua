@@ -144,11 +144,11 @@ end
 
     -- Change editor behavior for text files --
 function _G.text_edit_mode()
-    vim.o.spell = true
-    vim.o.textwidth = 120
-    vim.o.colorcolumn = '120'
-    vim.o.wrap = true
-    vim.o.linebreak = true
+    vim.opt_local.spell = true
+    vim.opt_local.textwidth = 120
+    vim.opt_local.colorcolumn = '120'
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
     -- Accept 1st spelling suggestion with <Leader>z --
     map('n', '<Leader>z', '1z=')
 end
