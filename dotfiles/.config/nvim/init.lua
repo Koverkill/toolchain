@@ -12,7 +12,7 @@
 -- 5. Keymaps
 
 --------------------------------------------------------------------------------
--- 1. Plugin Managemer and Installation ----------------------------------------
+-- 1. Plugin Manager and Installation ------------------------------------------
 --------------------------------------------------------------------------------
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
@@ -221,13 +221,13 @@ require('bufferline').setup {
 }
 
     -- Plugin Settings: Treesitter --
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = { 'bash', 'c', 'go', 'json', 'lua', 'python', 'vim' },
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
-}
+    require'nvim-treesitter.configs'.setup {
+        ensure_installed = { 'bash', 'c', 'go', 'json', 'lua', 'python', 'vim' },
+        highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+        },
+    }
 
     -- Plugin Settings: Telescope --
 require('telescope').setup {
@@ -289,14 +289,6 @@ local Terminal  = require('toggleterm.terminal').Terminal
         end
     end
 
-    -- spt: spotify tui --
-    local spotify = Terminal:new({ cmd = 'spt', direction='float', hidden = true })
-    function _spotify_toggle()
-        if vim.fn.executable('spt') == 1 then
-            spotify:toggle()
-        end
-    end
-
 --------------------------------------------------------------------------------
 -- 5. Keymaps ------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -335,4 +327,3 @@ map('n', '<Leader>r', ':Telescope resume <CR>')
     -- Toggleterm --
 map('n', '<Leader>t', '<Cmd>execute v:count . "ToggleTerm"<CR>')
 map('n', '<Leader>g', '<cmd>lua _lazygit_toggle()<CR>')
-map('n', '<F3>', '<cmd>lua _spotify_toggle()<CR>')
