@@ -1,8 +1,0 @@
-gui:
-  theme:
-    selectedLineBgColor:
-      - reverse
-    selectedRangeBgColor:
-      - reverse
-os:
-  editCommand: 'nvim'

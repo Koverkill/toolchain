@@ -3,18 +3,13 @@
 # My ZSH config
 
 # Exports
-export EDITOR="nvim"
-export MANPAGER="nvim +Man!"
 export ZSH="$HOME/.oh-my-zsh"
-export LD_LIBRARY_PATH="$HOME/tools/llvm-project/build/lib:$LD_LIBRARY_PATH"
+export PATH="/home/overvk2/nvim-linux64/bin/:$PATH"
 
 # Aliases
 alias lg="lazygit"
 alias vim="nvim"
-alias xsdk="python3 -m xsdk"
-
-# Exports
-export PATH="/bin:/usr/bin:/usr/local/bin:/home/kovervig/local/bin:/home/kovervig/scripts/:/usr/local/go/bin:/home/kovervig/glow/:/home/kovervig/nvim-linux64/bin/:$HOME/tools/llvm-project/build/bin:$HOME/clangd/clangd/bin:$PATH"
+alias :q="exit"
 
 # Source my helper funcs
 source <(cat $HOME/scripts/*.sh)
@@ -30,5 +25,5 @@ ZSH_HIGHLIGHT_STYLES[path_prefix]=none
 # Path to your oh-my-zsh installation.
 source $ZSH/oh-my-zsh.sh
 
-# oh-my-zsh
-eval "$(oh-my-posh --init --shell zsh --config '~/.poshthemes/microverse-power.omp.json')"
+# Prompt: oh-my-posh
+eval "$(oh-my-posh --init --shell zsh --config '~/.poshthemes/space.omp.json')"
