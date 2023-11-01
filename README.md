@@ -208,3 +208,43 @@ check 'Do not show again for WSL 2 version prompt'.
 - I couldn't get gdb debugging to work in wsl-vscode while using WSL1. I changed the version back and then I could run with an unaccounted for debug print in the terminal. I was able to debug my projects with the VSCode UI though despite the ugly print.
 - For C/C++ development, I followed [this](https://code.visualstudio.com/docs/cpp/config-wsl) link.
 - For Windows C/C++ development (or if you need to use windows only utilitys like windows.h), I followed [this](https://code.visualstudio.com/docs/languages/cpp) link.
+
+# Using a mix of windows/linux utilities
+I use the following bash helper to determine if I am using a command from a windows or linux directory so I can primarily work in linux:
+``` Bash
+function isWinDir() {
+    case $PWD/ in
+        /mnt/*)
+        return $(true)
+        ;;
+    *)
+        return $(false)
+        ;;
+    esac
+}
+```
+then if I need to handle conditional usage of a utility, I'll find the executable path (from PowerShell) using:
+``` PowerShell
+get-command <executable>.exe
+```
+or the linux path (from Bash) using:
+``` Bash
+where <command>
+```
+then I'll change the executable permissions (from Bash) using:
+``` Bash
+chmod +x path/to/<executable>.exe
+```
+then I'll add a helper function in my scripts to invoke the command based on the directory I am working in.
+
+ex. git:
+``` Bash
+function git() {
+    if isWinDir
+    then
+        git.exe "$@"
+    else
+        /usr/bin/git "$@"
+    fi
+}
+```
